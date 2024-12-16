@@ -1,0 +1,91 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class DigitalNoticeBoard {
+public static void main(String[] args) {
+JFrame frame = new JFrame(" Digital Notice Board ");
+frame.setSize(800, 600);
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+JPanel noticePanel = new JPanel();
+noticePanel.setLayout(new BoxLayout(noticePanel, BoxLayout.Y_AXIS));
+JScrollPane scrollPane = new JScrollPane(noticePanel);
+scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+JTextArea noticeInput = new JTextArea(3, 50);
+noticeInput.setFont(new Font("Arial", Font.PLAIN, 14));
+noticeInput.setBackground(new Color(255, 250, 205));
+noticeInput.setForeground(new Color(0, 0, 0));
+noticeInput.setLineWrap(true);
+noticeInput.setWrapStyleWord(true);
+
+JButton addButton = new JButton(" Add Notice");
+addButton.setFont(new Font("Arial", Font.BOLD, 14));
+addButton.setBackground(new Color(72, 201, 176));
+addButton.setForeground(Color.WHITE);
+addButton.setFocusPainted(false);
+
+11
+
+addButton.addActionListener(new ActionListener() {
+@Override
+public void actionPerformed(ActionEvent e) {
+String noticeText = noticeInput.getText().trim();
+if (!noticeText.isEmpty()) {
+JLabel noticeLabel = new JLabel("<html><p style='width: 500px;'>" +
+
+noticeText + "</p></html>");
+
+noticeLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+noticeLabel.setBackground(new Color(255, 239, 200));
+noticeLabel.setForeground(new Color(50, 50, 50));
+noticeLabel.setOpaque(true);
+noticeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+noticeLabel.setPreferredSize(new Dimension(600, 40));
+noticeLabel.setBorder(BorderFactory.createLineBorder(new Color(255, 165, 0),
+
+2));
+
+JPanel borderedPanel = new JPanel(new BorderLayout());
+borderedPanel.setBackground(new Color(255, 250, 205));
+borderedPanel.setPreferredSize(new Dimension(600, 50));
+borderedPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0,
+
+Color.DARK_GRAY));
+
+borderedPanel.add(noticeLabel, BorderLayout.CENTER);
+
+noticePanel.add(borderedPanel);
+noticePanel.revalidate();
+noticePanel.repaint();
+noticeInput.setText("");
+} else {
+JOptionPane.showMessageDialog(frame, "Notice cannot be empty!", "Error",
+
+JOptionPane.ERROR_MESSAGE);
+
+}
+}
+});
+
+12
+
+JPanel inputPanel = new JPanel(new BorderLayout());
+JLabel inputLabel = new JLabel(" Add Notice:");
+inputLabel.setFont(new Font("Arial", Font.BOLD, 14));
+inputLabel.setForeground(Color.WHITE);
+inputPanel.setBackground(new Color(34, 45, 65));
+inputPanel.add(inputLabel, BorderLayout.WEST);
+inputPanel.add(noticeInput, BorderLayout.CENTER);
+inputPanel.add(addButton, BorderLayout.EAST);
+
+frame.setLayout(new BorderLayout());
+frame.add(scrollPane, BorderLayout.CENTER);
+frame.add(inputPanel, BorderLayout.SOUTH);
+frame.getContentPane().setBackground(new Color(34, 45, 65));
+
+frame.setVisible(true);
+}
+}
